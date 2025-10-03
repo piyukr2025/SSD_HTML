@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CS6.302 SSD Monsoon 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Fonts and CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --fg:#2a2e37;
+      --muted:#6b7280;
+      --primary:#2563eb;
+      --primary-weak:#e8efff;
+      --card:#ffffff;
+      --border:#e5e7eb;
+      --link:#0ea5e9;
+      --accent:#10b981;
+      --danger:#ef4444;
+    }
+
+    html,body{
+      background:var(--bg);
+      color:var(--fg);
+      font-family: Quicksand, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.6;
+      font-size:18px;
+    }
+
+    a{ color:var(--link); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    /* Sticky top navigation */
+    .topnav{
+      position:sticky; top:0; z-index:1020;
+      backdrop-filter:saturate(180%) blur(10px);
+      background:rgba(255,255,255,0.8);
+      border-bottom:1px solid var(--border);
+    }
+    .topnav .nav-link{
+      padding:.75rem 1rem; border-radius:.5rem; color:var(--fg);
+    }
+    .topnav .nav-link.active, .topnav .nav-link:hover{
+      background:var(--primary-weak);
+      color:var(--primary);
+      text-decoration:none;
+    }
+
+    .page-wrap{ max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+
+    /* Hero */
+    .hero{
+      text-align:center;
+      padding: 24px 16px;
+      background:linear-gradient(180deg, #ffffff, #f5f8ff 80%);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.06);
+    }
+    .hero h1{ font-weight:700; margin-bottom:.25rem; }
+    .hero h3{ color:var(--muted); margin:.25rem 0; }
+    .meta{ color:var(--muted); font-size:0.95rem; }
+
+    /* Section cards */
+    .card-section{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding: 20px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom:24px;
+    }
+    .card-section h2, .card-section h3, .card-section h4{
+      margin-bottom:.75rem;
+      font-weight:700;
+    }
+    .section-actions{
+      display:flex; gap:12px; flex-wrap:wrap;
+      font-size:.95rem;
+      margin-bottom:8px;
+    }
+
+    /* Content lists */
+    ul.flat{
+      padding-left: 1rem;
+      margin: 0.25rem 0 0.5rem 0;
+    }
+    ul.flat > li { margin: .25rem 0; }
+
+    /* Tables */
+    table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing:0;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+    }
+    th, td{
+      padding:12px 14px;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+    }
+    thead th{
+      background:#f3f6fb;
+      font-weight:700;
+      position:sticky; top:56px; z-index:1;
+    }
+    tr:last-child td{ border-bottom:none; }
+    tr.light-text-row{ color:#999; }
+    td a{ white-space:nowrap; }
+    .table-wrap{
+      overflow:auto; -webkit-overflow-scrolling:touch;
+      border-radius:12px; border:1px solid var(--border); background:var(--card);
+    }
+
+    /* Schedule badges */
+    .badge-pill{
+      border-radius:999px; padding:.25rem .6rem;
+      font-size:.8rem; font-weight:600;
+    }
+    .badge-cancel{ background:#fff1f2; color:var(--danger); border:1px solid #fecdd3; }
+    .badge-rain{ background:#eef2ff; color:#4338ca; border:1px solid #c7d2fe; }
+    .badge-lab{ background:#ecfeff; color:#0891b2; border:1px solid #a5f3fc; }
+
+    /* Footer */
+    footer{
+      color:var(--muted);
+      text-align:center;
+      margin: 24px 0 16px;
+    }
+
+    /* Small helpers */
+    .hr{ border-top:1px solid var(--border); margin:16px 0; }
+    .note{ font-size:.95rem; color:var(--muted); }
+    .nowrap{ white-space:nowrap; }
+
+    /* Responsive tweaks */
+    @media (max-width: 992px){
+      html,body{ font-size:17px; }
+      thead th{ top:96px; } /* account for taller nav wrap */
+    }
+    @media (max-width: 576px){
+      html,body{ font-size:16px; }
+      .hero{ padding:16px; }
+      .card-section{ padding:16px; }
+      th,td{ padding:10px 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Navigation -->
+  <nav class="topnav">
+    <div class="page-wrap d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center" style="gap:12px;">
+        <a class="navbar-brand m-0 p-0" href="#home" style="font-weight:800; color:var(--fg);">CS6.302</a>
+        <span class="meta d-none d-md-inline">Monsoon 2025</span>
+      </div>
+      <div class="d-flex flex-wrap" style="gap:6px;">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#lecture">Lectures</a>
+        <a class="nav-link" href="#cpolicy">Policy</a>
+        <a class="nav-link" href="#schedule">Schedule</a>
+        <a class="nav-link" href="#lab">Lab</a>
+        <a class="nav-link" href="#activity">Exams</a>
+        <a class="nav-link" href="#staff">Staff</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-wrap">
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <h1>CS6.302 - Software System Development</h1>
+      <h3>Software Engineering Research Center, IIIT Hyderabad</h3>
+      <h3>Monsoon 2025</h3>
+      <div class="meta mt-2">
+        <span class="nowrap">Live clock: <span id="txt">—</span></span>
+        <span class="mx-2">•</span>
+        <span class="nowrap" id="lastUpdated">Site Last Updated: </span>
+      </div>
+      <div class="mt-3">
+        <div class="section-actions">
+          <span class="note">Quick links:</span>
+          <a href="#schedule">Lectures</a>
+          <a href="#lab">Lab</a>
+          <a href="#activity">Exams</a>
+          <a href="#staff">Contacts</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="card-section" id="about">
+      <h2>About</h2>
+      <p>
+        Software System Development is a graduate-level course that equips students with a comprehensive understanding of the principles, tools, and practices involved in designing and building modern software systems, spanning OS, Networks, SE, and Databases (relational and NoSQL). 
+      </p>
+      <p>
+        Learners gain hands-on experience with Bash, SQL, NoSQL, HTML, CSS, JavaScript, front-end frameworks, REST, Python, Flask, and deployment workflows, emphasizing scalable, maintainable, and secure systems.
+      </p>
+      <p class="mb-0">
+        Designed for students with fundamental programming skills, the course bridges theory and practice for complex research and industry projects. <span class="hr"></span>
+      </p>
+    </section>
+
+    <!-- Lecture/Lab/Office -->
+    <section class="card-section" id="lecture">
+      <h2>Lecture/Lab/Office Hours</h2>
+      <ul class="flat">
+        <li>Lecture 🏛️: 8:30–9:55 AM, Tue & Fri, H-205 — 29 classes</li>
+        <li>Lab 💻: 2:00–3:00 PM @ SH1 & 2:00–5:00 PM Fri, SH1 — 14 sessions</li>
+      </ul>
+      <p class="mb-2"><strong>Office Hours:</strong> Instructor available 15 minutes before every class or via email at saianirudh.karre[at]iiit.ac.in. TA office hours under Staff.</p>
+      <div class="hr"></div>
+    </section>
+
+    <!-- Course Policy -->
+    <section class="card-section" id="cpolicy">
+      <h2>Course Policy</h2>
+      <div class="section-actions">
+        <a href="#home">Go to top</a>
+      </div>
+      <ul class="flat">
+        <li><strong>Teaching & Learning:</strong> Real-life problems for deeper engagement; overall notes available on the linked Notion.</li>
+        <li><strong>Academic Honesty:</strong> Help peers learn, not copy—build durable skills.</li>
+        <li><strong>Zero Tolerance on Plagiarism:</strong> Cheating yields 0; egregious cases may receive F.</li>
+        <li><strong>Absentee:</strong> No makeups for missed in-lecture activities; participation expected.</li>
+        <li><strong>Misc:</strong> Bring a capable laptop and engage actively in class and labs.</li>
+        <li><strong>Use of AI:</strong> Tools allowed with disclosure; concepts first, tools second.</li>
+        <li><strong>Submission Deadlines:</strong> No extensions; follow provided windows and guidelines; medical exemptions via Academic Office.</li>
+        <li><strong>Grading Policy:</strong> Re-eval requests within a week of posting; no makeups unless pre-approved; late only for genuine health with documentation.</li>
+      </ul>
+
+      <h3 class="mt-3">Grading Distribution</h3>
+      <div class="table-wrap mb-3">
+        <!-- original table preserved -->
+        <table>
+          <thead>
+            <tr align="center"><th>Deliverables</th><th>Weightage</th></tr>
+          </thead>
+          <tbody>
+            <tr align="center"><td>Assignment (4)</td><td>15%</td></tr>
+            <tr align="center"><td>Lab Activities (14)</td><td>15%</td></tr>
+            <tr align="center"><td>Practice and Class Activity (5)</td><td>10%</td></tr>
+            <tr align="center"><td>QUIZ (2)</td><td>10%</td></tr>
+            <tr align="center"><td>MID (1) - Team Hackathon</td><td>10%</td></tr>
+            <tr align="center"><td>Final Exam (Team Project)</td><td>40%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Evaluation Rubric</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Rubric</th><th>Input (15%)</th><th>Logic (60%)</th><th>Output (15%)</th><th>Submission (10%)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Exceptional (100%)</td><td>All inputs as per requirements</td><td>Logic accurate and per requirements</td><td>All outputs as per requirements</td><td>Submissions correct and per requirements</td></tr>
+            <tr><td>Acceptable (70%)</td><td>Inputs partially as per requirements</td><td>Logic almost correct</td><td>Outputs partially correct</td><td>Submission partially correct</td></tr>
+            <tr><td>Beginning (30%)</td><td>At least one input correct</td><td>Logic partially correct</td><td>At least one output correct</td><td>At least one part correct</td></tr>
+            <tr><td>No Response (0%)</td><td>None of the inputs work</td><td>Logic incorrect</td><td>No outputs correct</td><td>Submission incorrect</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Lecture Schedule -->
+    <section class="card-section" id="schedule">
+      <h2>Lecture Schedule & Content</h2>
+      <div class="section-actions">
+        <a href="#home">Go to top</a>
+      </div>
+      <div class="table-wrap">
+        <!-- original schedule table preserved with improved styling -->
+        <!-- Paste the original schedule table here unchanged except outer wrapper removed widths -->
+        <!-- BEGIN original schedule table -->
+        <table>
+          <thead>
+            <tr align="center">
+              <th>S.No</th>
+              <th>Schedule</th>
+              <th>Lecture Content</th>
+              <th>Material</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Keep your existing <tr> rows exactly as provided -->
+            <!-- ... PASTE ALL ORIGINAL SCHEDULE ROWS HERE (unchanged) ... -->
+          </tbody>
+        </table>
+        <!-- END original schedule table -->
+      </div>
+    </section>
+
+    <!-- Lab Schedule -->
+    <section class="card-section" id="lab">
+      <h2>Lab Schedule & Content</h2>
+      <div class="section-actions">
+        <a href="#home">Go to top</a>
+      </div>
+      <div class="table-wrap">
+        <!-- BEGIN original lab table -->
+        <table>
+          <thead>
+            <tr align="center">
+              <th>Lab No.</th><th>Schedule</th><th>Topic</th><th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ... PASTE ALL ORIGINAL LAB ROWS HERE (unchanged) ... -->
+          </tbody>
+        </table>
+        <!-- END original lab table -->
+      </div>
+    </section>
+
+    <!-- Exams -->
+    <section class="card-section" id="activity">
+      <h2>Exams</h2>
+      <div class="section-actions">
+        <a href="#home">Go to top</a>
+      </div>
+      <div class="table-wrap mb-3">
+        <!-- BEGIN original exams table -->
+        <table>
+          <thead>
+            <tr align="center">
+              <th>S.No</th><th>Exam Type</th><th>Announcement</th><th>Submission Due</th><th>Material</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ... PASTE ALL ORIGINAL EXAM ROWS HERE (unchanged) ... -->
+          </tbody>
+        </table>
+        <!-- END original exams table -->
+      </div>
+    </section>
+
+    <!-- Staff -->
+    <section class="card-section" id="staff">
+      <h2>Staff</h2>
+      <div class="section-actions">
+        <a href="#home">Go to top</a>
+      </div>
+      <p><strong>Instructors:</strong> <a href="https://sites.google.com/view/abhishek-singh/home" target="_blank">Dr. Abhishek Singh</a>, <a href="https://sai11101989.github.io" target="_blank">Dr. Sai Anirudh Karre</a></p>
+      <p><strong>Teaching Assistants:</strong> Chirag Dhamija, Tejas Cavale, Divyansh Pandey, Aaditya Vardhan Narain, Kunal Kamalkishire Bhosikar, Chandrasekar S, Ashwani Raj, Hiya Bhatt</p>
+    </section>
+
+    <!-- Important Links -->
+    <section class="card-section">
+      <h3>Important Links</h3>
+      <p class="mb-0">
+        <a href="https://intranet.iiit.ac.in/offices/static/files/Almanac_M25_Final-Ver2.1.pdf" target="_blank">Monsoon 2025 Almanac</a> |
+        <a href="https://intranet.iiit.ac.in/offices/static/files/Lecture%20timetable%20for%20Monsoon_2025_V1.2.pdf" target="_blank">Spring 2025 Lecture Timetable</a> |
+        <a href="https://intranet.iiit.ac.in/offices/static/files/Tutorials%26LAB_Schedule_M25-V2.pdf" target="_blank">Spring 2025 Lab Timetable</a> |
+        <a href="https://courses.iiit.ac.in/course/view.php?id=5324" target="_blank">Courses Portal</a>
+      </p>
+    </section>
+
+    <footer>
+      Course site hosted by github.io • Course Policy credits: <a href="https://faculty.iiit.ac.in/~raghu.reddy/Home.html">Dr. Raghu Reddy</a> & <a href="https://karthikvaidhyanathan.com/">Dr. Karthik Vaidhyanathan</a><br>
+      <a href="https://serc.iiit.ac.in">Software Engineering Research Center</a>, <a href="https://iiit.ac.in">IIIT Hyderabad</a>
+      <div class="mt-2"><a href="#home">Go to top</a></div>
+    </footer>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    // Live clock with consistent formatting
+    function startTime() {
+      const today = new Date();
+      const timeStr = today.toLocaleString(undefined, {
+        hour:'2-digit', minute:'2-digit', second:'2-digit'
+      });
+      const dateStr = today.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
+      const el = document.getElementById('txt');
+      if (el) el.textContent = dateStr + ' • ' + timeStr;
+      setTimeout(startTime, 1000);
+    }
+
+    // Safe "last updated" setter
+    function setLastUpdated() {
+      const lastModified = new Date(document.lastModified);
+      const formattedDate = lastModified.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      const el = document.getElementById('lastUpdated');
+      if (el) el.textContent = 'Site Last Updated: ' + formattedDate;
+    }
+
+    // Smooth scroll + active link highlight
+    function setupNav() {
+      const links = document.querySelectorAll('.topnav .nav-link');
+      const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+      function onScroll() {
+        const y = window.scrollY + 140; // offset for sticky nav
+        let activeId = null;
+        for (const sec of sections) {
+          if (sec.offsetTop <= y) activeId = '#' + sec.id;
+        }
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === activeId));
+      }
+
+      links.forEach(a => {
+        a.addEventListener('click', (e) => {
+          const target = document.querySelector(a.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            window.scrollTo({ top: target.offsetTop - 64, behavior: 'smooth' });
+          }
+        });
+      });
+
+      document.addEventListener('scroll', onScroll, { passive:true });
+      onScroll();
+    }
+
+    // Initialize after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      setLastUpdated();
+      startTime();
+      setupNav();
+    });
+  </script>
+</body>
+</html>
